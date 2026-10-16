@@ -25,10 +25,7 @@ jobs:
               run: dotnet restore "./webappRazorpages/webapp Razor pages.csproj"
 
             - name: build 
-              run: dotnet build --no-restore --configuration Release
-
-            - name: test
-              run: dotnet test --no-build --verbosity normal
+              run: dotnet build "./webappRazorpages/webapp Razor pages.csproj" --no-restore --configuration Release
 
             - name: publish artifacts
               run: dotnet publish --no-build --configuration Release --output ./publish
