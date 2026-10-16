@@ -28,7 +28,7 @@ jobs:
               run: dotnet build "./webappRazorpages/webapp Razor pages.csproj" --no-restore --configuration Release
 
             - name: publish artifacts
-              run: dotnet publish --no-build --configuration Release --output ./publish
+              run: dotnet publish  "./webappRazorpages/webapp Razor pages.csproj" --no-build --configuration Release --output ./publish
 
 
     package-publish-docker-image:
