@@ -1,0 +1,69 @@
+name: razorpages build outside of docker
+
+on:
+    push: [ "main" ]
+    pull_request: [ "main" ]
+
+jobs:
+    build:
+        name: build and test outside of docker
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v3
+
+            - name: setup .net
+              uses: actions/setup-dotnet@v3
+              with:
+                 dotnet-version: '7.0.x'
+
+            - name: restore dependencies
+              run: dotnet restore
+
+            - name: build 
+              run: dotnet build --no-restore --configuration Release
+
+            - name: test
+              run: dotnet test --no-build --verbosity normal
+
+            - name: publish artifacts
+              run: dotnet publish --no-build --configuration Release --output ./publish
+
+
+    package-publish-docker-image:
+
+        runs-on: ubuntu-latest
+
+        needs: build
+        steps:
+            - name: download artifacts
+              uses: actions/download-artifacts@v3
+              with:
+                name: publish
+                path: ./publish
+
+            - name: login to docker hub
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKER_USERNAME }}
+                password: $ {{ secrets.DOCKER_PASSWORD }}
+                
+            - name: build and push docker image
+              uses: docker/build-push-action@v5
+              with:
+                context: .
+# here we are not using file because the dockerfile is in the root of the repo and context . will find it
+                push: true
+                tags: ${{ secrets.DOCKER_USERNAME }}/razorpages:latest
+
+
+        
+
+            
+
+        
+
+              
+
