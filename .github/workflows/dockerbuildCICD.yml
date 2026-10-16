@@ -22,7 +22,7 @@ jobs:
                  dotnet-version: '7.0.x'
 
             - name: restore dependencies
-              run: dotnet restore
+              run: dotnet restore "./webappRazorpages/webapp Razor pages.csproj"
 
             - name: build 
               run: dotnet build --no-restore --configuration Release
