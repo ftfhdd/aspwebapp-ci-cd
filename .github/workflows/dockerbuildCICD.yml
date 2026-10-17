@@ -60,6 +60,7 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                 context: .
+                file: webappRazorpages/Dockerfile
 # here we are not using file because the dockerfile is in the root of the repo and context . will find it
                 push: true
                 tags: ${{ secrets.DOCKERHUB_USERNAME }}/razorpages:latest
