@@ -62,7 +62,7 @@ jobs:
                 context: .
 # here we are not using file because the dockerfile is in the root of the repo and context . will find it
                 push: true
-                tags: ${{ secrets.DOCKER_USERNAME }}/razorpages:latest
+                tags: ${{ secrets.DOCKERHUB_USERNAME }}/razorpages:latest
 # even though you added context docker build action look for dockerfile in context 
 #but without looking source code it will show empty workspace
         
