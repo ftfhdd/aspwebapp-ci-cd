@@ -39,9 +39,11 @@ jobs:
     package-publish-docker-image:
 
         runs-on: ubuntu-latest
-# checkout code not added 
         needs: build
         steps:
+            - name: checkout code
+              uses: actions/checkout@v3
+              
             - name: download artifacts
               uses: actions/download-artifact@v4
               with:
@@ -52,7 +54,7 @@ jobs:
               uses: docker/login-action@v3
               with:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
-                password: $ {{ secrets.DOCKERHUB_TOKEN }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
                 
             - name: build and push docker image
               uses: docker/build-push-action@v5
@@ -61,8 +63,8 @@ jobs:
 # here we are not using file because the dockerfile is in the root of the repo and context . will find it
                 push: true
                 tags: ${{ secrets.DOCKER_USERNAME }}/razorpages:latest
-
-
+# even though you added context docker build action look for dockerfile in context 
+#but without looking source code it will show empty workspace
         
 
             
