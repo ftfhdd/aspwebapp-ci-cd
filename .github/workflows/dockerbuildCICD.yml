@@ -33,7 +33,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                  name: publish
-                 path: ./publish
+                 path: ${{ github.workspace }}/publish
 
 
     package-publish-docker-image:
@@ -46,7 +46,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                 name: publish
-                path: ./publish
+                path: ${{ github.workspace }}/publish
 
             - name: login to docker hub
               uses: docker/login-action@v2
